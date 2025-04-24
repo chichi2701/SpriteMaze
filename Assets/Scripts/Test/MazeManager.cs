@@ -16,13 +16,14 @@ public class MazeManager : MonoBehaviour {
     void SetupGame() {
         // 1. Lấy map và start/goal từ map generator
         mapGenerator.SetupMap();
-        int[,] map = mapGenerator.GetMap();
-        Vector2Int start = mapGenerator.GetStart();
-        Vector2Int goal = mapGenerator.GetGoal();
+        int[,] map = mapGenerator.Map;
+        Vector2Int start = mapGenerator.StartPosition;
+        Vector2Int goal = mapGenerator.GoalPosition;
 
         // 2. Tìm đường
         path = pathfinder.FindPath(map, start, goal);
-        pathfinder.HighlightPath(path, mapGenerator.transform);
+        // pathfinder.HighlightPath(path, mapGenerator.transform);
+        pathfinder.HighlightPath(path, mapGenerator.CellGrid, goal);
 
         // 3. Spawn NPC và gán đường đi
         npcInstance = Instantiate(npcPrefab, new Vector3(start.x, -start.y, -1), Quaternion.identity);
@@ -32,5 +33,19 @@ public class MazeManager : MonoBehaviour {
     public void MoveNPC() {
         if (mover != null)
             mover.StartMoving(path);
+    }
+
+    public void ResetMap() {
+        // 1. Lấy map và start/goal từ map generator
+        mapGenerator.SetupMap();
+        int[,] map = mapGenerator.Map;
+        Vector2Int start = mapGenerator.StartPosition;
+        Vector2Int goal = mapGenerator.GoalPosition;
+
+        // 2. Tìm đường
+        path = pathfinder.FindPath(map, start, goal);
+        pathfinder.HighlightPath(path, mapGenerator.CellGrid, goal);
+
+        npcInstance.transform.position = new Vector3(start.x, -start.y, -1);
     }
 }

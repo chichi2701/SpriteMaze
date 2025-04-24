@@ -1,4 +1,4 @@
-// Attach this to the same GameObject as MapGenerator or fetch references manually
+﻿// Attach this to the same GameObject as MapGenerator or fetch references manually
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -81,16 +81,6 @@ public class AStarPathfinder : MonoBehaviour {
         return path;
     }
 
-    public void HighlightPath(List<Vector2Int> path) {
-        foreach (var pos in path) {
-            Transform cell = mapGenerator.transform.Find($"Cell_{pos.x}_{pos.y}");
-            if (cell != null) {
-                var sr = cell.GetComponent<SpriteRenderer>();
-                if (sr.color == Color.white) sr.color = Color.yellow; // highlight only path cells
-            }
-        }
-    }
-
     public void HighlightPath(List<Vector2Int> path, Transform mapParent) {
         foreach (var pos in path) {
             string cellName = $"Cell_{pos.x}_{pos.y}";
@@ -98,7 +88,22 @@ public class AStarPathfinder : MonoBehaviour {
 
             if (cell != null) {
                 SpriteRenderer sr = cell.GetComponent<SpriteRenderer>();
-                if (sr != null && pos != startPos && pos != goalPos) {
+                if (sr != null && pos != goalPos) {
+                    sr.color = Color.yellow;
+                }
+            }
+        }
+    }
+
+    public void HighlightPath(List<Vector2Int> path, Transform[,] cellGrid, Vector2Int goal) {
+        foreach (var pos in path) {
+            if (pos == goal) continue; // bỏ qua goal (nếu muốn giữ màu đỏ)
+
+            Transform cell = cellGrid[pos.y, pos.x]; // truy cập trực tiếp
+
+            if (cell != null) {
+                SpriteRenderer sr = cell.GetComponent<SpriteRenderer>();
+                if (sr != null) {
                     sr.color = Color.yellow;
                 }
             }
