@@ -21,7 +21,11 @@ public class MapGenerator : MonoBehaviour {
         }
     }
 
-    void Start() {
+    //void Start() {
+    //    SetupMap();
+    //}
+
+    public void SetupMap() {
         GenerateMapWithGuaranteedPath();
         DrawMap();
     }

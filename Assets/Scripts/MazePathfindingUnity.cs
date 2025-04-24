@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MazeManager : MonoBehaviour {
+public class MazeManager_1 : MonoBehaviour {
     public GameObject cellPrefab;
     public int width = 10, height = 10;
 
