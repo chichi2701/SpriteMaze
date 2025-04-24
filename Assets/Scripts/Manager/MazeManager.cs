@@ -24,7 +24,7 @@ public class MazeManager : MonoBehaviour {
         path = pathfinder.FindPath(map, start, goal);
         pathfinder.HighlightPath(path, mapGenerator.CellGrid, goal);
 
-        npcInstance = Instantiate(npcPrefab, new Vector3(start.x, -start.y, -1), Quaternion.identity);
+        npcInstance = Instantiate(npcPrefab, new Vector3(start.x, -start.y, 0), Quaternion.identity);
         mover = npcInstance.GetComponent<NPCMover>();
     }
 
@@ -46,6 +46,6 @@ public class MazeManager : MonoBehaviour {
         pathfinder.HighlightPath(path, mapGenerator.CellGrid, goal);
 
         // Move NPC back to new start position
-        npcInstance.transform.position = new Vector3(start.x, -start.y, -1);
+        npcInstance.transform.position = new Vector3(start.x, -start.y, 0);
     }
 }
